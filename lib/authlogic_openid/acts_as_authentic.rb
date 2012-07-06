@@ -71,8 +71,6 @@ module AuthlogicOpenid
       # if their OpenID provider supports it.
       def save(perform_validation = true, &block)
         return false if perform_validation && block_given? && authenticate_with_openid? && !authenticate_with_openid
-        
-        return false if new_record? && !openid_complete?
         result = super
         yield(result) if block_given?
         result
