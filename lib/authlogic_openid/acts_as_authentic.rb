@@ -70,7 +70,11 @@ module AuthlogicOpenid
       # Another advantage of taking this approach is that we can set fields from their OpenID profile before we save the record,
       # if their OpenID provider supports it.
       def save(options={}, &block)
-        return false if perform_validation && block_given? && authenticate_with_openid? && !authenticate_with_openid
+        defaults = {
+          :validate => true
+        }
+        options = defaults.merge(options)
+        return false if options[:validate] && block_given? && authenticate_with_openid? && !authenticate_with_openid
         result = super(options)
         yield(result) if block_given?
         result
