@@ -43,7 +43,7 @@ module AuthlogicOpenid
         return if !klass.column_names.include?("openid_identifier")
         
         klass.class_eval do
-          validates_uniqueness_of :openid_identifier, :scope => validations_scope, :if => :using_openid?
+          validates :openid_identifier, :uniqueness => {:scope => validations_scope}, :if => :using_openid?
           validate :validate_openid
           validates_length_of_password_field_options validates_length_of_password_field_options.merge(:if => :validate_password_with_openid?)
           validates_confirmation_of_password_field_options validates_confirmation_of_password_field_options.merge(:if => :validate_password_with_openid?)
